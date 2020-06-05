@@ -1,0 +1,30 @@
+scalar Long
+scalar Timestamp
+
+type Count {
+    timestamp: Timestamp
+    total: Int
+    lobby: Int
+    minez: Int
+    annihilation: Int
+    smash: Int
+    slaughter: Int
+    dbv: Int
+    gg: Int
+    mta: Int
+    wir: Int
+    ghostcraft: Int
+    wastedSandbox: Int
+    wastedGungame: Int
+    minez2: Int
+    goldrush: Int
+}
+
+type CountQueries {
+    latest: Count
+    interval(from: Timestamp, to: Timestamp): [Count]
+}
+
+schema {
+    query: CountQueries
+}

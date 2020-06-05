@@ -28,3 +28,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Configuration ###
+.graphqlconfig
+application-*.yml

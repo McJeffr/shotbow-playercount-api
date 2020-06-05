@@ -1,1 +1,9 @@
+spring:
+  profiles:
+    active: 'local'
 
+endpoint: 'https://shotbow.net/serverList.json'
+
+graphql:
+  servlet:
+    exception-handlers-enabled: true
