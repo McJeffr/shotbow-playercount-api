@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties(prefix = "application")
 class CustomConfigurationProperties(
         var endpoint: String = "",
-        var maxIntervalDays: Int = 100
+        var maxIntervalDays: Int = 100,
+        var maxPoints: Int = 1000
 )

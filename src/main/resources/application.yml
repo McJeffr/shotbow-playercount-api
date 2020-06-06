@@ -5,3 +5,4 @@ spring:
 application:
   endpoint: 'https://shotbow.net/serverList.json'
   max-interval-days: 100
+  max-points: 1000

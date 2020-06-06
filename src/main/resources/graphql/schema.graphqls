@@ -1,5 +1,6 @@
 scalar Long
 scalar Timestamp
+scalar Aggregation
 
 type Count {
     timestamp: Timestamp
@@ -22,7 +23,7 @@ type Count {
 
 type CountQueries {
     latest: Count
-    interval(from: Timestamp, to: Timestamp): [Count]
+    interval(from: Timestamp!, to: Timestamp!, type: Aggregation = "AVG", points: Int = 100): [Count]
 }
 
 schema {

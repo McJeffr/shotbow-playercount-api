@@ -2,8 +2,10 @@ package com.mcjeffr.shotbowplayercountapi.api
 
 import com.mcjeffr.shotbowplayercountapi.configuration.CustomConfigurationProperties
 import com.mcjeffr.shotbowplayercountapi.errors.InvalidParameterError
+import com.mcjeffr.shotbowplayercountapi.models.AggregationType
 import com.mcjeffr.shotbowplayercountapi.models.Count
 import com.mcjeffr.shotbowplayercountapi.repositories.CountRepository
+import com.mcjeffr.shotbowplayercountapi.services.CountService
 import graphql.kickstart.tools.GraphQLQueryResolver
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -16,7 +18,7 @@ import kotlin.math.abs
 @Component
 class CountQueries @Autowired constructor(
         private val config: CustomConfigurationProperties,
-        private val countRepository: CountRepository
+        private val countService: CountService
 ) : GraphQLQueryResolver {
 
     private final val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
@@ -26,10 +28,11 @@ class CountQueries @Autowired constructor(
     }
 
     fun getLatest(): Count {
-        return countRepository.getLatest()
+        return countService.getLatest()
     }
 
-    fun getInterval(from: Date, to: Date): List<Count> {
+    fun getInterval(from: Date, to: Date,
+                    type: AggregationType = AggregationType.AVG, points: Int = 100): List<Count> {
         if (from.after(to)) {
             throw InvalidParameterError("Parameter 'from' cannot be after 'to'",
                     mapOf("from" to sdf.format(from), "to" to sdf.format(to)))
@@ -40,11 +43,17 @@ class CountQueries @Autowired constructor(
         val diff = to.time - from.time
         if ((diff) >= duration) {
             throw InvalidParameterError("Interval between 'from' and 'to' is too big. " +
-                    "Maximum size is ${config.maxIntervalDays} days",
+                    "Maximum size is ${config.maxIntervalDays} days.",
                     mapOf("from" to sdf.format(from), "to" to sdf.format(to)))
         }
 
-        return countRepository.getInterval(from, to)
+        if (points > config.maxPoints) {
+            throw InvalidParameterError("Parameter 'points' is too big. " +
+                    "Maximum size is ${config.maxPoints}.",
+                    mapOf("from" to sdf.format(from), "to" to sdf.format(to)))
+        }
+
+        return countService.getInterval(from, to, points, type)
     }
 
 }
