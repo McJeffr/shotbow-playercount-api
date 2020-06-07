@@ -6,6 +6,10 @@ import graphql.language.StringValue
 import graphql.schema.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.*
 
 @Configuration
@@ -13,26 +17,27 @@ class ScalarConfiguration {
 
     @Bean
     fun timestampScalar(): GraphQLScalarType {
-        val coercing: Coercing<Date, Long> = object : Coercing<Date, Long> {
+        val coercing: Coercing<LocalDateTime, Long> = object : Coercing<LocalDateTime, Long> {
             override fun serialize(o: Any): Long {
-                if (o !is Date) {
+                if (o !is LocalDateTime) {
                     throw CoercingSerializeException("Provided object to serialize is not of type 'Date'")
                 }
-                return o.time / 1000
+                return o.toEpochSecond(ZoneOffset.UTC)
             }
 
-            override fun parseValue(o: Any): Date {
+            override fun parseValue(o: Any): LocalDateTime {
                 if (o !is Long) {
                     throw CoercingParseValueException("Provided object to parse is not of GraphQL type 'Long'")
                 }
-                return Date(o * 1000)
+                return LocalDateTime.ofInstant(Instant.ofEpochSecond(o), ZoneId.of("UTC"))
             }
 
-            override fun parseLiteral(o: Any): Date {
+            override fun parseLiteral(o: Any): LocalDateTime {
                 if (o !is IntValue) {
                     throw CoercingParseValueException("Provided object to parse is not of GraphQL type 'Int'")
                 }
-                return Date(o.value.toLong() * 1000)
+                return LocalDateTime.ofInstant(Instant.ofEpochSecond(o.value.toLong()),
+                        ZoneId.of("UTC"))
             }
         }
 

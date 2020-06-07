@@ -7,8 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
-import java.util.*
 
+/**
+ * This class contains the scraper that scrapes the player count endpoint from Shotbow at a fixed
+ * interval.
+ *
+ * @author McJeffr
+ */
 @Component
 class CountScraper @Autowired constructor(
         private val config: CustomConfigurationProperties,
@@ -21,7 +26,6 @@ class CountScraper @Autowired constructor(
     fun scrapeCounts() {
         val count: Count? = restTemplate.getForObject(config.endpoint, Count::class.java)
         if (count != null) {
-            count.timestamp = Date((count.timestamp.time / 1000) * 1000) // Shave off the milliseconds
             countRepository.save(count)
         }
     }

@@ -2,23 +2,14 @@ scalar Long
 scalar Timestamp
 scalar Aggregation
 
+type CountComponent {
+    name: String
+    value: Int
+}
+
 type Count {
-    timestamp: Timestamp
-    total: Int
-    lobby: Int
-    minez: Int
-    annihilation: Int
-    smash: Int
-    slaughter: Int
-    dbv: Int
-    gg: Int
-    mta: Int
-    wir: Int
-    ghostcraft: Int
-    wastedSandbox: Int
-    wastedGungame: Int
-    minez2: Int
-    goldrush: Int
+    timestamp: Timestamp!
+    components: [CountComponent!]!
 }
 
 type CountQueries {

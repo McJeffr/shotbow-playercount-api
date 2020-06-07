@@ -4,7 +4,6 @@ import com.mcjeffr.shotbowplayercountapi.configuration.CustomConfigurationProper
 import com.mcjeffr.shotbowplayercountapi.errors.InvalidParameterError
 import com.mcjeffr.shotbowplayercountapi.models.AggregationType
 import com.mcjeffr.shotbowplayercountapi.models.Count
-import com.mcjeffr.shotbowplayercountapi.repositories.CountRepository
 import com.mcjeffr.shotbowplayercountapi.services.CountService
 import graphql.kickstart.tools.GraphQLQueryResolver
 import org.springframework.beans.factory.annotation.Autowired

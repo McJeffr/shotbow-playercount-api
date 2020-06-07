@@ -1,74 +1,37 @@
 package com.mcjeffr.shotbowplayercountapi.models
 
-import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.*
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.mcjeffr.shotbowplayercountapi.utils.CountDeserializer
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import javax.persistence.*
 
+/**
+ * This class represents all the recorded counts at a specific point in time.
+ *
+ * @author McJeffr
+ */
 @Entity
-@Table(name = "playercount")
-data class Count(
+@Table(name = "player_count")
+@JsonDeserialize(using = CountDeserializer::class)
+class Count(
         @Id
-        @Temporal(TemporalType.TIMESTAMP)
+        @GeneratedValue
+        @Column(name = "id")
+        var id: Long = 0,
+
         @Column(name = "moment")
-        var timestamp: Date = Calendar.getInstance().time,
+        val timestamp: LocalDateTime = LocalDateTime.now(ZoneId.of("UTC"))
+                .truncatedTo(ChronoUnit.SECONDS),
 
-        @Column(name = "total")
-        @JsonProperty("all")
-        var total: Int = -1,
+        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+        @JoinTable(name = "player_count_components")
+        val components: MutableList<CountComponent> = mutableListOf()
+) {
 
-        @Column(name = "lobby")
-        @JsonProperty("lobby")
-        var lobby: Int = -1,
+    override fun toString(): String {
+        return "Count(id=$id, timestamp=$timestamp, components=$components)"
+    }
 
-        @Column(name = "minez")
-        @JsonProperty("minez")
-        var minez: Int = -1,
-
-        @Column(name = "annihilation")
-        @JsonProperty("annihilation")
-        var annihilation: Int = -1,
-
-        @Column(name = "smash")
-        @JsonProperty("smash")
-        var smash: Int = -1,
-
-        @Column(name = "slaughter")
-        @JsonProperty("slaughter")
-        var slaughter: Int = -1,
-
-        @Column(name = "dbv")
-        @JsonProperty("dbv")
-        var dbv: Int = -1,
-
-        @Column(name = "gg")
-        @JsonProperty("gg")
-        var gg: Int = -1,
-
-        @Column(name = "mta")
-        @JsonProperty("mta")
-        var mta: Int = -1,
-
-        @Column(name = "wir")
-        @JsonProperty("wir")
-        var wir: Int = -1,
-
-        @Column(name = "ghostcraft")
-        @JsonProperty("ghostcraft")
-        var ghostcraft: Int = -1,
-
-        @Column(name = "wasted_sandbox")
-        @JsonProperty("wasted_sandbox")
-        var wastedSandbox: Int = -1,
-
-        @Column(name = "wasted_gungame")
-        @JsonProperty("wasted_gungame")
-        var wastedGungame: Int = -1,
-
-        @Column(name = "minez2")
-        @JsonProperty("minez2")
-        var minez2: Int = -1,
-
-        @Column(name = "goldrush")
-        @JsonProperty("goldrush")
-        var goldrush: Int = -1
-)
+}
