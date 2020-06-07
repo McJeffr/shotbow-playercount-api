@@ -2,19 +2,56 @@ scalar Long
 scalar Timestamp
 scalar Aggregation
 
-type CountComponent {
-    name: String
-    value: Int
-}
-
 type Count {
     timestamp: Timestamp!
-    components: [CountComponent!]!
+    all: Int
+    all_us: Int
+    all_eu: Int
+    minez: Int
+    smash: Int
+    ghostcraft: Int
+    hcfactions: Int
+    annihilation: Int
+    lms: Int
+    wasted: Int
+    wasted_sandbox: Int
+    wasted_gungame: Int
+    wasted_control: Int
+    dbv: Int
+    craftybomber: Int
+    vadact: Int
+    wir: Int
+    minez2: Int
+    slaughter: Int
+    lightbikes: Int
+    hips: Int
+    mama: Int
+    sweepers: Int
+    lobby: Int
+    gg: Int
+    flappy: Int
+    assault: Int
+    goldrush: Int
+    mta: Int
+    civwar: Int
+    ddg: Int
+    shotball: Int
+    annihilation_us: Int
+    dbv_us: Int
+    shotball_us: Int
+    gg_us: Int
+    lobby_lobby: Int
+    lobby_us: Int
+    minez_us: Int
+    wir_us: Int
+    slaughter_us: Int
+    smash_us: Int
+    hcfactions_us: Int
 }
 
 type CountQueries {
     latest: Count
-    interval(from: Timestamp!, to: Timestamp!, type: Aggregation = "AVG", points: Int = 100): [Count]
+    interval(from: Timestamp!, to: Timestamp!, type: Aggregation = AVG, points: Int = 100): [Count!]
 }
 
 schema {

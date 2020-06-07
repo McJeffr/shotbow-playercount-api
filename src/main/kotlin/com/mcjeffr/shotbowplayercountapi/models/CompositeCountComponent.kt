@@ -14,27 +14,36 @@ open class CompositeCountComponent(
 ) : CountComponent(name = name, value = value) {
 
     /**
-     * Adds a count component to this composite count component, provided the value is greater than
-     * or equal to 0.
+     * Secondary constructor that constructs a composite count component using a count component.
+     * @param component A count component object.
+     */
+    constructor(component: CountComponent) : this(component.name, component.value, 1)
+
+    /**
+     * Adds a count component to this composite count component.
      * @param count The count component to add.
      */
     fun add(count: CountComponent) {
-        if (count.value >= 0) {
-            this.value += count.value
-            this.amount++
-        }
+        this.value += count.value
+        this.amount++
     }
 
     /**
-     * Adds a composite count component to this composite count component, provided the value is
-     * greater than or equal to 0.
+     * Adds a composite count component to this composite count component.
      * @param count The composite count component to add.
      */
     fun add(count: CompositeCountComponent) {
-        if (count.value >= 0) {
-            this.value += count.value
-            this.amount += count.amount
-        }
+        this.value += count.value
+        this.amount += count.amount
+    }
+
+    /**
+     * Converts this composite count component to a regular count component by dividing the value
+     * with the amount, essentially averaging the value.
+     * @return A count component object that is "averaged".
+     */
+    fun toCount(): CountComponent {
+        return CountComponent(name = this.name, value = this.value / this.amount)
     }
 
     override fun toString(): String {
