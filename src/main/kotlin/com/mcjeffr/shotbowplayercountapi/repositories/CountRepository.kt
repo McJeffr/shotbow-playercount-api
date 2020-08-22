@@ -6,6 +6,11 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
 
+/**
+ * This interface is used as the container for communication with the database.
+ *
+ * @author McJeffr
+ */
 @Repository
 interface CountRepository : JpaRepository<Count, Long> {
 

@@ -9,6 +9,11 @@ import com.mcjeffr.shotbowplayercountapi.models.CountComponent
 import java.lang.Integer.parseInt
 import java.lang.NumberFormatException
 
+/**
+ * Deserializes the JSON returned from Shotbow into a count object.
+ *
+ * @author McJeffr
+ */
 class CountDeserializer : JsonDeserializer<Count>() {
 
     override fun deserialize(parser: JsonParser, context: DeserializationContext): Count {

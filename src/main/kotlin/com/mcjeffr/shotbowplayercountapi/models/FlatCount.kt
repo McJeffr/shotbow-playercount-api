@@ -8,6 +8,8 @@ import kotlin.reflect.full.memberProperties
  * This class represents a flat count object. This flat count is used by GraphQL as its type. This
  * object is needed because GraphQL doesn't allow for dynamic types. It's a bit messy, but it works
  * fine for this use-case.
+ *
+ * @author McJeffr
  */
 data class FlatCount(
         var timestamp: LocalDateTime,

@@ -15,12 +15,14 @@ open class CompositeCountComponent(
 
     /**
      * Secondary constructor that constructs a composite count component using a count component.
+     *
      * @param component A count component object.
      */
     constructor(component: CountComponent) : this(component.name, component.value, 1)
 
     /**
      * Adds a count component to this composite count component.
+     *
      * @param count The count component to add.
      */
     fun add(count: CountComponent) {
@@ -30,6 +32,7 @@ open class CompositeCountComponent(
 
     /**
      * Adds a composite count component to this composite count component.
+     *
      * @param count The composite count component to add.
      */
     fun add(count: CompositeCountComponent) {
@@ -40,6 +43,7 @@ open class CompositeCountComponent(
     /**
      * Converts this composite count component to a regular count component by dividing the value
      * with the amount, essentially averaging the value.
+     *
      * @return A count component object that is "averaged".
      */
     fun toCount(): CountComponent {
