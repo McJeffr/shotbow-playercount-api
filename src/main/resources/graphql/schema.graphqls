@@ -1,6 +1,10 @@
 scalar Long
 scalar Timestamp
-scalar Aggregation
+enum Aggregation {
+    AVG
+    MIN
+    MAX
+}
 
 type Count {
     timestamp: Timestamp!

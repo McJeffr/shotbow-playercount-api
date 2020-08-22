@@ -1,0 +1,3 @@
+# Shotbow Playercount API
+
+README still needs to be written...
