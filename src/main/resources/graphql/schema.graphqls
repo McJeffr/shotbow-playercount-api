@@ -1,12 +1,22 @@
-scalar Long
+# Timestamp in UNIX time (seconds since January 1st, 1970).
 scalar Timestamp
+
+# Aggregation types, these determine how to aggregate data points (averages, minimums or maximums).
 enum Aggregation {
+    # Fetches the average of a group of player counts.
     AVG
+
+    # Fetches the minimum of a group of player counts.
     MIN
+
+    # Fetches the maximum of a group of player counts.
     MAX
 }
 
+# The flattened count object. This object contains all of the recorded player counts of each of the
+# specified gamemodes on Shotbow at a specific timestamp.
 type Count {
+    # The timestamp at which all of the player counts in this object were recorded.
     timestamp: Timestamp!
     all: Int
     all_us: Int
@@ -53,8 +63,12 @@ type Count {
     hcfactions_us: Int
 }
 
+# A collection of queries for fetching the player count objects.
 type CountQueries {
+    # Fetches the most recent player count.
     latest: Count
+
+    # Fetches a list of player counts based on the provided interval.
     interval(from: Timestamp!, to: Timestamp!, type: Aggregation = AVG, points: Int = 100): [Count!]
 }
 
