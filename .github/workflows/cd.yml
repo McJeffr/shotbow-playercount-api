@@ -1,0 +1,32 @@
+name: CD
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Docker Tag'
+        required: true
+
+env:
+  CONTAINER_NAME: shotbow-playercount-api
+  IMAGE_NAME: shotbow-playercount-api
+
+jobs:
+  cicd:
+    runs-on: ubuntu-latest
+  steps:
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}"
+
+          # Stop and remove old instance
+          docker stop "${{ env.CONTAINER_NAME }}"
+          docker rm "${{ env.CONTAINER_NAME }}"
+
+          # Start new instance
+          docker run -d --name ${{ env.CONTAINER_NAME }} --network postgres_default --restart always -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} $IMAGE
