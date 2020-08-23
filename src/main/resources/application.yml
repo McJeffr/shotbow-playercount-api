@@ -1,6 +1,19 @@
 spring:
   profiles:
     active: 'local'
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+          time_zone: UTC
+  datasource:
+    driver-class-name: org.postgresql.Driver
 
 application:
   endpoint: 'https://shotbow.net/serverList.json'

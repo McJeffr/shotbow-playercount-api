@@ -41,6 +41,9 @@ class CountService(private val countRepository: CountRepository) {
                     type: AggregationType = AggregationType.AVG): List<Count> {
         /* Get all the count objects in the provided interval */
         val counts: List<Count> = countRepository.getInterval(from, to)
+        if (counts.isEmpty()) {
+            return listOf()
+        }
 
         /* Calculate the amount of count objects per data point and chunk it */
         val amountOfCountsPerPoint = ceil(counts.size / amountOfPoints.toDouble())
