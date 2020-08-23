@@ -29,4 +29,4 @@ jobs:
             docker rm "${{ env.CONTAINER_NAME }}"
 
             # Start new instance
-            docker run -d --name ${{ env.CONTAINER_NAME }} --network postgres_default --restart always -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} $IMAGE
+            docker run -d --name ${{ env.CONTAINER_NAME }} --link postgres:postgres --restart always -e VIRTUAL_HOST=${{ secrets.VIRTUAL_HOST }} -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} $IMAGE
