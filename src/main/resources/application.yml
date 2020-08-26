@@ -19,3 +19,13 @@ application:
   endpoint: 'https://shotbow.net/serverList.json'
   max-interval-days: 100
   max-points: 1000
+  gamemodes:
+    - 'all'
+    - 'minez'
+    - 'smash'
+    - 'annihilation'
+    - 'dbv'
+    - 'slaughter'
+    - 'wir'
+    - 'gg'
+    - 'lobby'

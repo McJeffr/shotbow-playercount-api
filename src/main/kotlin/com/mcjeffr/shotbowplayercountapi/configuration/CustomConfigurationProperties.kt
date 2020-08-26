@@ -13,5 +13,6 @@ import org.springframework.stereotype.Component
 class CustomConfigurationProperties(
         var endpoint: String = "",
         var maxIntervalDays: Int = 100,
-        var maxPoints: Int = 1000
+        var maxPoints: Int = 1000,
+        var gamemodes: List<String> = listOf()
 )

@@ -33,6 +33,9 @@ class CountScraper @Autowired constructor(
         try {
             val count: Count? = restTemplate.getForObject(config.endpoint, Count::class.java)
             if (count != null) {
+                count.components.removeIf { component ->
+                    !config.gamemodes.contains(component.name)
+                }
                 countRepository.save(count)
             }
         } catch (e: Exception) {
