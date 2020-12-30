@@ -15,8 +15,6 @@ jobs:
   cd:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
@@ -24,16 +22,26 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            # Environment variables
             IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}"
-            CONTAINER_NAME="${{ env.CONTAINER_NAME }}"
-            VIRTUAL_HOST="${{ secrets.VIRTUAL_HOST }}"
-            DATABASE_URL="${{ secrets.DATABASE_URL }}"
-            DATABASE_USERNAME="${{ secrets.DATABASE_USERNAME }}"
-            DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
 
             # Stop and remove old instance
-            docker-compose down
+            docker stop "${{ env.CONTAINER_NAME }}"
+            docker rm "${{ env.CONTAINER_NAME }}"
 
             # Start new instance
-            docker-compose up -d
+            docker run -d \
+            --name ${{ env.CONTAINER_NAME }} \
+            --network postgres \
+            --network web \
+            --restart always \
+            -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} \
+            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
+            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            -l "traefik.enable=true" \
+            -l "traefik.http.routers.sb-status-api.rule=Host(`${VIRTUAL_HOST}`)" \
+            -l "traefik.http.routers.sb-status-api.entrypoints=web" \
+            -l "traefik.http.routers.sb-status-api.middlewares=redirect@file" \
+            -l "traefik.http.routers.sb-status-api-secured.rule=Host(`${VIRTUAL_HOST}`)" \
+            -l "traefik.http.routers.sb-status-api-secured.entrypoints=web-secured" \
+            -l "traefik.http.routers.sb-status-api-secured.tls.certresolver=myhttpchallenge" \
+            $IMAGE
