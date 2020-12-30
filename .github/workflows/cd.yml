@@ -46,4 +46,4 @@ jobs:
             $IMAGE
 
             # Connect to Traefik network
-            docker network connect web
+            docker network connect web ${{ env.CONTAINER_NAME }}
