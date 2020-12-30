@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  sb-status-api:
+    image: ${IMAGE}
+    restart: always
+    container_name: ${CONTAINER_NAME}
+    networks:
+      - web
+      - postgres
+    environment:
+      - "SPRING_DATASOURCE_URL=${DATABASE_URL}"
+      - "SPRING_DATASOURCE_USERNAME=${DATABASE_USERNAME}"
+      - "SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sb-status-api.rule=Host(`${VIRTUAL_HOST}`)"
+      - "traefik.http.routers.sb-status-api.entrypoints=web"
+      - "traefik.http.routers.sb-status-api.middlewares=redirect@file"
+      - "traefik.http.routers.sb-status-api-secured.rule=Host(`${VIRTUAL_HOST}`)"
+      - "traefik.http.routers.sb-status-api-secured.entrypoints=web-secured"
+      - "traefik.http.routers.sb-status-api-secured.tls.certresolver=myhttpchallenge"
+
+networks:
+  web:
+    external: true
+  postgres:
+    external: true
