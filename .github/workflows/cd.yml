@@ -32,7 +32,6 @@ jobs:
             docker run -d \
             --name ${{ env.CONTAINER_NAME }} \
             --link postgres:postgres \
-            --network web \
             --restart always \
             -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} \
             -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
@@ -45,3 +44,6 @@ jobs:
             -l traefik.http.routers.sb-status-api-secured.entrypoints=web-secured \
             -l traefik.http.routers.sb-status-api-secured.tls.certresolver=myhttpchallenge \
             $IMAGE
+
+            # Connect to Traefik network
+            docker network connect web
