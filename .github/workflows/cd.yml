@@ -28,10 +28,9 @@ jobs:
             docker stop "${{ env.CONTAINER_NAME }}"
             docker rm "${{ env.CONTAINER_NAME }}"
 
-            # Start new instance
-            docker run -d \
+            # Create new instance
+            docker create -d \
             --name ${{ env.CONTAINER_NAME }} \
-            --link postgres:postgres \
             --restart always \
             -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} \
             -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
@@ -48,3 +47,6 @@ jobs:
             # Connect to the networks
             docker network connect postgres ${{ env.CONTAINER_NAME }}
             docker network connect web ${{ env.CONTAINER_NAME }}
+
+            # Start container
+            docker start ${{ env.CONTAINER_NAME }}
