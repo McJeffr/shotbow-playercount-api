@@ -31,7 +31,7 @@ jobs:
             # Start new instance
             docker run -d \
             --name ${{ env.CONTAINER_NAME }} \
-            --network postgres \
+            --link postgres:postgres \
             --network web \
             --restart always \
             -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} \
