@@ -38,10 +38,10 @@ jobs:
             -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
             -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
             -l traefik.enable=true \
-            -l "traefik.http.routers.sb-status-api.rule=Host(`${{ secrets.VIRTUAL_HOST }}`)" \
+            -l 'traefik.http.routers.sb-status-api.rule=Host(`${{ secrets.VIRTUAL_HOST }}`)' \
             -l traefik.http.routers.sb-status-api.entrypoints=web \
             -l "traefik.http.routers.sb-status-api.middlewares=redirect@file" \
-            -l "traefik.http.routers.sb-status-api-secured.rule=Host(`${{ secrets.VIRTUAL_HOST }}`)" \
+            -l 'traefik.http.routers.sb-status-api-secured.rule=Host(`${{ secrets.VIRTUAL_HOST }}`)' \
             -l traefik.http.routers.sb-status-api-secured.entrypoints=web-secured \
             -l traefik.http.routers.sb-status-api-secured.tls.certresolver=myhttpchallenge \
             $IMAGE
