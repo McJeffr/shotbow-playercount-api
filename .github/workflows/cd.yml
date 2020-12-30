@@ -45,5 +45,6 @@ jobs:
             -l traefik.http.routers.sb-status-api-secured.tls.certresolver=myhttpchallenge \
             $IMAGE
 
-            # Connect to Traefik network
+            # Connect to the networks
+            docker network connect postgres ${{ env.CONTAINER_NAME }}
             docker network connect web ${{ env.CONTAINER_NAME }}
