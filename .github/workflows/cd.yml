@@ -29,7 +29,7 @@ jobs:
             docker rm "${{ env.CONTAINER_NAME }}"
 
             # Create new instance
-            docker create -d \
+            docker create \
             --name ${{ env.CONTAINER_NAME }} \
             --restart always \
             -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} \
