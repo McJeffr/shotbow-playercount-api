@@ -36,13 +36,14 @@ jobs:
             -e INFLUX_TOKEN=${{ secrets.INFLUX_TOKEN }} \
             -e INFLUX_ORG=${{ secrets.INFLUX_ORG }} \
             -e INFLUX_BUCKET=${{ secrets.INFLUX_BUCKET }} \
-            -l traefik.enable=true \
-            -l 'traefik.http.routers.sb-status-api.rule=Host(`${{ secrets.VIRTUAL_HOST }}`)' \
-            -l traefik.http.routers.sb-status-api.entrypoints=web \
-            -l "traefik.http.routers.sb-status-api.middlewares=redirect@file" \
-            -l 'traefik.http.routers.sb-status-api-secured.rule=Host(`${{ secrets.VIRTUAL_HOST }}`)' \
-            -l traefik.http.routers.sb-status-api-secured.entrypoints=web-secured \
-            -l traefik.http.routers.sb-status-api-secured.tls.certresolver=myhttpchallenge \
+            -l 'traefik.enable'=true \
+            -l 'traefik.http.routers.sb-status-api-secured.entrypoints'=web-secured \
+            -l 'traefik.http.routers.sb-status-api-secured.rule'="HOST(\`${{ secrets.VIRTUAL_HOST }}\`)" \
+            -l 'traefik.http.routers.sb-status-api-secured.tls.certresolver'=myhttpchallenge \
+            -l 'traefik.http.routers.sb-status-api.entrypoints'=web \
+            -l 'traefik.http.routers.sb-status-api.middlewares'='redirect@file' \
+            -l 'traefik.http.routers.sb-status-api.rule'="HOST(\`${{ secrets.VIRTUAL_HOST }}\`)" \
+            -l 'traefik.http.services.sb-status-api.loadbalancer.server.port'='8080' \
             $IMAGE
 
             # Connect to the networks
