@@ -32,9 +32,10 @@ jobs:
             docker create \
             --name ${{ env.CONTAINER_NAME }} \
             --restart always \
-            -e SPRING_DATASOURCE_URL=${{ secrets.DATABASE_URL }} \
-            -e SPRING_DATASOURCE_USERNAME=${{ secrets.DATABASE_USERNAME }} \
-            -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            -e INFLUX_URL=${{ secrets.INFLUX_URL }} \
+            -e INFLUX_TOKEN=${{ secrets.INFLUX_TOKEN }} \
+            -e INFLUX_ORG=${{ secrets.INFLUX_ORG }} \
+            -e INFLUX_BUCKET=${{ secrets.INFLUX_BUCKET }} \
             -l traefik.enable=true \
             -l 'traefik.http.routers.sb-status-api.rule=Host(`${{ secrets.VIRTUAL_HOST }}`)' \
             -l traefik.http.routers.sb-status-api.entrypoints=web \
@@ -45,7 +46,7 @@ jobs:
             $IMAGE
 
             # Connect to the networks
-            docker network connect postgres ${{ env.CONTAINER_NAME }}
+            docker network connect influx_influx ${{ env.CONTAINER_NAME }}
             docker network connect web ${{ env.CONTAINER_NAME }}
 
             # Start container
