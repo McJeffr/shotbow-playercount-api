@@ -19,6 +19,13 @@ jobs:
         id: extract-version
         run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\/v/}
 
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Docker build
         run: docker build -t $IMAGE_NAME .
 
