@@ -1,6 +1,6 @@
 package com.mcjeffr.shotbowplayercountapi.models
 
-import java.time.LocalDateTime
+import java.time.Instant
 import kotlin.reflect.KMutableProperty
 import kotlin.reflect.full.memberProperties
 
@@ -12,10 +12,8 @@ import kotlin.reflect.full.memberProperties
  * @author McJeffr
  */
 data class FlatCount(
-        var timestamp: LocalDateTime,
+        var timestamp: Instant,
         var all: Int = -1,
-        var all_us: Int = -1,
-        var all_eu: Int = -1,
         var minez: Int = -1,
         var smash: Int = -1,
         var ghostcraft: Int = -1,
@@ -45,17 +43,8 @@ data class FlatCount(
         var civwar: Int = -1,
         var ddg: Int = -1,
         var shotball: Int = -1,
-        var annihilation_us: Int = -1,
-        var dbv_us: Int = -1,
-        var shotball_us: Int = -1,
-        var gg_us: Int = -1,
-        var lobby_lobby: Int = -1,
-        var lobby_us: Int = -1,
-        var minez_us: Int = -1,
-        var wir_us: Int = -1,
-        var slaughter_us: Int = -1,
-        var smash_us: Int = -1,
-        var hcfactions_us: Int = -1
+        var warband: Int = -1,
+        var minerproblems: Int = -1,
 ) {
 
     companion object {

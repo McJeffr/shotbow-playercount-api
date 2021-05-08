@@ -19,8 +19,6 @@ type Count {
     # The timestamp at which all of the player counts in this object were recorded.
     timestamp: Timestamp!
     all: Int
-    all_us: Int
-    all_eu: Int
     minez: Int
     smash: Int
     ghostcraft: Int
@@ -50,17 +48,8 @@ type Count {
     civwar: Int
     ddg: Int
     shotball: Int
-    annihilation_us: Int
-    dbv_us: Int
-    shotball_us: Int
-    gg_us: Int
-    lobby_lobby: Int
-    lobby_us: Int
-    minez_us: Int
-    wir_us: Int
-    slaughter_us: Int
-    smash_us: Int
-    hcfactions_us: Int
+    warband: Int
+    minerproblems: Int
 }
 
 # A collection of queries for fetching the player count objects.
@@ -69,7 +58,7 @@ type CountQueries {
     latest: Count
 
     # Fetches a list of player counts based on the provided interval.
-    interval(from: Timestamp!, to: Timestamp!, type: Aggregation = AVG, points: Int = 100): [Count!]
+    interval(from: Timestamp!, to: Timestamp!, type: Aggregation = AVG, interval: String = "1m"): [Count!]
 }
 
 schema {

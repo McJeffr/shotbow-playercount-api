@@ -5,8 +5,8 @@ package com.mcjeffr.shotbowplayercountapi.models
  *
  * @author McJeffr
  */
-enum class AggregationType {
+enum class AggregationType(val fnName: String) {
 
-    AVG, MIN, MAX
+    AVG("mean"), MIN("min"), MAX("max")
 
 }

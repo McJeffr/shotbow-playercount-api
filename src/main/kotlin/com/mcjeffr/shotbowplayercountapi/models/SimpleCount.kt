@@ -1,6 +1,6 @@
 package com.mcjeffr.shotbowplayercountapi.models
 
-import java.time.LocalDateTime
+import java.time.Instant
 
 /**
  * This class represents a simple count. A simple count is not a managed Entity, it is simply a
@@ -10,7 +10,7 @@ import java.time.LocalDateTime
  * @author McJeffr
  */
 data class SimpleCount(
-        val timestamp: LocalDateTime,
+        val timestamp: Instant,
         val name: String,
         val value: Int
 ) {

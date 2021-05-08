@@ -1,24 +1,10 @@
 spring:
   profiles:
     active: 'local'
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        jdbc:
-          lob:
-            non_contextual_creation: true
-          time_zone: UTC
-  datasource:
-    driver-class-name: org.postgresql.Driver
 
 application:
   endpoint: 'https://shotbow.net/serverList.json'
-  max-interval-days: 100
-  max-points: 1000
+  max-interval-days: 366
   gamemodes:
     - 'all'
     - 'minez'
@@ -29,3 +15,6 @@ application:
     - 'wir'
     - 'gg'
     - 'lobby'
+    - 'minerproblems'
+    - 'warband'
+    - 'mta'
